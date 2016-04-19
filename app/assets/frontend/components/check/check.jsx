@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 var Check = React.createClass({
 	checkClasses: function(check_status) {
 		return (check_status ? "'checked'" : null);

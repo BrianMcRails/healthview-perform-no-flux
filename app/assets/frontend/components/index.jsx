@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router'; //since we used link, we need to import link property from router library
-import RiskBox from './riskbox';
-import CheckBox from './checkbox';
-import PatientBox from './patientbox';
+import RiskBox from './risk/riskbox';
+import CheckBox from './check/checkbox';
+import PatientBox from './patient/patientbox';
 
 
 var Index = React.createClass({

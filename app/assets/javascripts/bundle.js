@@ -23000,11 +23000,11 @@
 
 	var _riskbox2 = _interopRequireDefault(_riskbox);
 
-	var _checkbox = __webpack_require__(466);
+	var _checkbox = __webpack_require__(467);
 
 	var _checkbox2 = _interopRequireDefault(_checkbox);
 
-	var _patientbox = __webpack_require__(469);
+	var _patientbox = __webpack_require__(470);
 
 	var _patientbox2 = _interopRequireDefault(_patientbox);
 
@@ -23150,6 +23150,10 @@
 
 	var _reactBootstrap = __webpack_require__(200);
 
+	var _riskcalculator = __webpack_require__(466);
+
+	var _riskcalculator2 = _interopRequireDefault(_riskcalculator);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Risk = _react2.default.createClass({
@@ -23160,7 +23164,7 @@
 				case 'Low':
 					return "success";
 					break;
-				case 'Med':
+				case 'Medium':
 					return "warning";
 					break;
 				case 'High':
@@ -23171,37 +23175,21 @@
 					break;
 			};
 		},
+
 		render: function render() {
 			return _react2.default.createElement(
 				_reactBootstrap.Col,
-				{ sm: 6, md: 3 },
+				{ sm: 6, md: 4 },
 				_react2.default.createElement(
 					'p',
 					null,
-					this.props.risk_score_title
-				),
-				_react2.default.createElement(
-					_reactBootstrap.OverlayTrigger,
-					{ trigger: 'hover', placement: 'right',
-						overlay: _react2.default.createElement(
-							_reactBootstrap.Popover,
-							{ id: this.props.id, title: this.props.risk_score_title },
-							'Risk is ',
-							_react2.default.createElement(
-								'strong',
-								null,
-								this.props.risk_weight,
-								'.'
-							),
-							this.props.risk_comment
-						) },
 					_react2.default.createElement(
-						_reactBootstrap.Button,
-						{ bsStyle: this.riskWeight(this.props.risk_weight) },
-						this.props.risk_percent
+						'strong',
+						null,
+						this.props.risk_score_title
 					)
 				),
-				_react2.default.createElement('br', null),
+				_react2.default.createElement(_riskcalculator2.default, this.props),
 				_react2.default.createElement(
 					'time',
 					null,
@@ -42432,6 +42420,156 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(200);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var RiskCalculator = _react2.default.createClass({
+	  displayName: 'RiskCalculator',
+	  getInitialState: function getInitialState() {
+	    return { showModal: false };
+	  },
+	  close: function close() {
+	    this.setState({ showModal: false });
+	  },
+	  open: function open() {
+	    this.setState({ showModal: true });
+	  },
+
+	  riskWeight: function riskWeight(weight) {
+	    switch (weight) {
+	      case 'Low':
+	        return "success";
+	        break;
+	      case 'Medium':
+	        return "warning";
+	        break;
+	      case 'High':
+	        return "danger";
+	        break;
+	      default:
+	        return "default";
+	        break;
+	    };
+	  },
+
+	  render: function render() {
+	    var popover = _react2.default.createElement(
+	      _reactBootstrap.Popover,
+	      { title: 'popover' },
+	      'very popover. such engagement'
+	    );
+	    var tooltip = _react2.default.createElement(
+	      _reactBootstrap.Tooltip,
+	      null,
+	      'wow.'
+	    );
+
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.OverlayTrigger,
+	        { trigger: 'hover', placement: 'right',
+	          overlay: _react2.default.createElement(
+	            _reactBootstrap.Popover,
+	            { id: this.props.id, title: this.props.risk_score_title },
+	            'Risk is ',
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              this.props.risk_weight,
+	              '.'
+	            ),
+	            this.props.risk_comment
+	          ) },
+	        _react2.default.createElement(
+	          _reactBootstrap.Button,
+	          {
+	            bsStyle: this.riskWeight(this.props.risk_weight),
+	            bsSize: 'sm',
+	            onClick: this.open
+	          },
+	          this.props.risk_percent
+	        )
+	      ),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.state.showModal, onHide: this.close },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            null,
+	            this.props.risk_score_title
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          null,
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'Risk Score'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.risk_percent
+	          ),
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'Severity'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.risk_weight
+	          ),
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            'Notes'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.risk_comment
+	          ),
+	          _react2.default.createElement('hr', null)
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Footer,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { onClick: this.close },
+	            'Close'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	exports.default = RiskCalculator;
+
+/***/ },
+/* 467 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
@@ -42439,7 +42577,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _checkslist = __webpack_require__(467);
+	var _checkslist = __webpack_require__(468);
 
 	var _checkslist2 = _interopRequireDefault(_checkslist);
 
@@ -42479,7 +42617,7 @@
 	exports.default = CheckBox;
 
 /***/ },
-/* 467 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42494,9 +42632,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _check = __webpack_require__(468);
+	var _check = __webpack_require__(469);
 
 	var _check2 = _interopRequireDefault(_check);
+
+	var _reactBootstrap = __webpack_require__(200);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42513,13 +42653,21 @@
 				{ className: 'card-panel' },
 				_react2.default.createElement(
 					'p',
-					null,
+					{ className: 'sectionHeader' },
 					'Pre-procedure Checklist'
 				),
 				_react2.default.createElement(
 					'form',
 					{ action: '#' },
-					checkNodes
+					_react2.default.createElement(
+						_reactBootstrap.Grid,
+						{ fluid: 'true' },
+						_react2.default.createElement(
+							_reactBootstrap.Row,
+							{ className: 'show-grid' },
+							checkNodes
+						)
+					)
 				)
 			);
 		}
@@ -42528,7 +42676,7 @@
 	exports.default = ChecksList;
 
 /***/ },
-/* 468 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -42573,7 +42721,7 @@
 	exports.default = Check;
 
 /***/ },
-/* 469 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42586,7 +42734,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _patientslist = __webpack_require__(470);
+	var _patientslist = __webpack_require__(471);
 
 	var _patientslist2 = _interopRequireDefault(_patientslist);
 
@@ -42627,7 +42775,7 @@
 	exports.default = PatientBox;
 
 /***/ },
-/* 470 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42642,7 +42790,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _patient = __webpack_require__(471);
+	var _patient = __webpack_require__(472);
 
 	var _patient2 = _interopRequireDefault(_patient);
 
@@ -42666,7 +42814,7 @@
 	exports.default = PatientsList;
 
 /***/ },
-/* 471 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

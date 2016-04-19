@@ -16,7 +16,10 @@ class Risk < ActiveRecord::Base
 	end
 
 	def risk_percent
-		risk_score.to_s + '%'		
+		if risk_score_title != 'SYNTAX Score'
+		risk_score.to_s + '%'
+		else risk_score		
+		end
 	end
 
 
@@ -24,7 +27,7 @@ class Risk < ActiveRecord::Base
 		if (risk_score.between?(0,20) && risk_score_title!='SCAI PCI Mortality') || (risk_score.between?(0,4) && risk_score_title=='SCAI PCI Mortality')
 			'Low'
 		elsif (risk_score.between?(21,30) && risk_score_title!='SCAI PCI Mortality') || (risk_score.between?(5,9) && risk_score_title=='SCAI PCI Mortality')
-			'Med'
+			'Medium'
 		elsif (risk_score>=31 && risk_score_title!='SCAI PCI Mortality') || (risk_score>=10 && risk_score_title=='SCAI PCI Mortality')
 			'High'
 		end
@@ -35,6 +38,8 @@ class Risk < ActiveRecord::Base
 			'Caution with contrast use.'
 		elsif risk_score_title=='SCAI PCI Mortality' && risk_score>=10
 			'Consider alternatives to PCI due to high mortality chance.'
+		elsif risk_score_title=='SYNTAX Score' && risk_score>=22
+			'Consider CABG as an alternative due to high chance of revascularization in PCI.'
 			
 		end
 
@@ -47,7 +52,7 @@ class Risk < ActiveRecord::Base
 			where user_id = :current_user_id
 			)", {current_user_id: current_user_id }])
 		.all
-		.order(updated_at: :desc)
+		.order(risk_score: :desc)
 	end
 
 
