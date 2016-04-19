@@ -4,7 +4,7 @@ class Risk < ActiveRecord::Base
 	belongs_to :user
 	
 	def as_json(options={})
-		super(methods: [:name, :gravatar, :risk_percent])
+		super(methods: [:name, :gravatar, :risk_percent, :risk_weight, :risk_comment])
 	end
 	
 	def name
@@ -17,6 +17,27 @@ class Risk < ActiveRecord::Base
 
 	def risk_percent
 		risk_score.to_s + '%'		
+	end
+
+
+	def risk_weight
+		if (risk_score.between?(0,20) && risk_score_title!='SCAI PCI Mortality') || (risk_score.between?(0,4) && risk_score_title=='SCAI PCI Mortality')
+			'Low'
+		elsif (risk_score.between?(21,30) && risk_score_title!='SCAI PCI Mortality') || (risk_score.between?(5,9) && risk_score_title=='SCAI PCI Mortality')
+			'Med'
+		elsif (risk_score>=31 && risk_score_title!='SCAI PCI Mortality') || (risk_score>=10 && risk_score_title=='SCAI PCI Mortality')
+			'High'
+		end
+	end
+
+	def risk_comment
+		if risk_score_title=='SCAI Acute Kidney Injury' && risk_score>=31
+			'Caution with contrast use.'
+		elsif risk_score_title=='SCAI PCI Mortality' && risk_score>=10
+			'Consider alternatives to PCI due to high mortality chance.'
+			
+		end
+
 	end
 
 	def self.stream_for(current_user_id)

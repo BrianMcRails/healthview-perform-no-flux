@@ -1,5 +1,6 @@
 import React from 'react';
 import Risk from './risk';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 var RisksList = React.createClass({
 	render: function(){
@@ -12,9 +13,11 @@ var RisksList = React.createClass({
 		return (
 			<div className="card-panel">
 				<p>Risk Scores</p>
-				<ul className="collection">
-					{riskNodes}
-				</ul>
+				<Grid fluid='true'>
+					<Row className="show-grid">
+						{riskNodes}
+					</Row>
+				</Grid>
 			</div>
 			);
 	}
