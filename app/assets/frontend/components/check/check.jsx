@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid, Row, Col, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 
 var Check = React.createClass({
@@ -7,12 +8,16 @@ var Check = React.createClass({
 	},
 	render: function(){
 		return (
-			<p>
-			<input type="checkbox" ref={this.props.id} className="filled-in" 
-			id={this.props.id} checked={this.checkClasses(this.props.check_status)} />
-      		<label for={this.props.id}>{this.props.check_name}</label>
+			<FormGroup controlId={this.props.check_name}>
+			<FormControl type="checkbox" ref={this.props.id} className="filled-in" 
+			checked={this.checkClasses(this.props.check_status)} readOnly='true'/>
+      		<ControlLabel>{this.props.check_name}</ControlLabel>
+      		<br />
       		<time>  {this.props.formattedDate}</time>
-      		</p>
+
+      		</FormGroup> 
+
+
 		);
 	}
 });

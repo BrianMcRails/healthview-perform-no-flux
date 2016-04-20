@@ -3,6 +3,8 @@ import { Link } from 'react-router'; //since we used link, we need to import lin
 import RiskBox from './risk/riskbox';
 import CheckBox from './check/checkbox';
 import PatientBox from './patient/patientbox';
+import CounterBox from './counter/counterbox';
+
 
 
 var Index = React.createClass({
@@ -11,8 +13,9 @@ var Index = React.createClass({
 		return (
 			<div className="container">
 			<PatientBox url="/patients" />
-			<CheckBox url="/pre_checks" pollInterval={10000} />
-			<RiskBox url="/risks" pollInterval={10000} />
+			<CheckBox url="/pre_checks" pollInterval={5000} />
+			<RiskBox url="/risks" pollInterval={5000} />
+			<CounterBox url="/counters" pollInterval={5000}/>
 			</div>
 		);
 	}

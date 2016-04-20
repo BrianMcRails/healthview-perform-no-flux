@@ -97,6 +97,7 @@
 
 	var documentReady = function documentReady() {
 	  var reactNode = document.getElementById('react');
+
 	  if (reactNode) {
 	    _reactDom2.default.render(_react2.default.createElement(
 	      _reactRouter.Router,
@@ -23008,7 +23009,14 @@
 
 	var _patientbox2 = _interopRequireDefault(_patientbox);
 
+	var _counterbox = __webpack_require__(473);
+
+	var _counterbox2 = _interopRequireDefault(_counterbox);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//since we used link, we need to import link property from router library
+
 
 	var Index = _react2.default.createClass({
 		displayName: 'Index',
@@ -23017,12 +23025,12 @@
 				'div',
 				{ className: 'container' },
 				_react2.default.createElement(_patientbox2.default, { url: '/patients' }),
-				_react2.default.createElement(_checkbox2.default, { url: '/pre_checks', pollInterval: 10000 }),
-				_react2.default.createElement(_riskbox2.default, { url: '/risks', pollInterval: 10000 })
+				_react2.default.createElement(_checkbox2.default, { url: '/pre_checks', pollInterval: 5000 }),
+				_react2.default.createElement(_riskbox2.default, { url: '/risks', pollInterval: 5000 }),
+				_react2.default.createElement(_counterbox2.default, { url: '/counters', pollInterval: 5000 })
 			);
 		}
-	}); //since we used link, we need to import link property from router library
-
+	});
 
 	module.exports = Index;
 
@@ -23121,7 +23129,7 @@
 				),
 				_react2.default.createElement(
 					_reactBootstrap.Grid,
-					{ fluid: 'true' },
+					null,
 					_react2.default.createElement(
 						_reactBootstrap.Row,
 						{ className: 'show-grid' },
@@ -23179,7 +23187,7 @@
 		render: function render() {
 			return _react2.default.createElement(
 				_reactBootstrap.Col,
-				{ sm: 6, md: 4 },
+				{ sm: 6, md: 4, className: 'card-panel' },
 				_react2.default.createElement(
 					'p',
 					null,
@@ -23192,7 +23200,7 @@
 				_react2.default.createElement(_riskcalculator2.default, this.props),
 				_react2.default.createElement(
 					'time',
-					null,
+					{ className: 'updated-time' },
 					'Last updated: ',
 					this.props.formattedDate
 				)
@@ -42461,23 +42469,13 @@
 	  },
 
 	  render: function render() {
-	    var popover = _react2.default.createElement(
-	      _reactBootstrap.Popover,
-	      { title: 'popover' },
-	      'very popover. such engagement'
-	    );
-	    var tooltip = _react2.default.createElement(
-	      _reactBootstrap.Tooltip,
-	      null,
-	      'wow.'
-	    );
 
 	    return _react2.default.createElement(
 	      'div',
-	      null,
+	      { className: 'calculator' },
 	      _react2.default.createElement(
 	        _reactBootstrap.OverlayTrigger,
-	        { trigger: 'hover', placement: 'right',
+	        { placement: 'right',
 	          overlay: _react2.default.createElement(
 	            _reactBootstrap.Popover,
 	            { id: this.props.id, title: this.props.risk_score_title },
@@ -42657,16 +42655,12 @@
 					'Pre-procedure Checklist'
 				),
 				_react2.default.createElement(
-					'form',
-					{ action: '#' },
+					_reactBootstrap.Form,
+					{ inline: true, action: '#' },
 					_react2.default.createElement(
-						_reactBootstrap.Grid,
-						{ fluid: 'true' },
-						_react2.default.createElement(
-							_reactBootstrap.Row,
-							{ className: 'show-grid' },
-							checkNodes
-						)
+						'div',
+						{ className: 'card-panel checklist' },
+						checkNodes
 					)
 				)
 			);
@@ -42679,7 +42673,7 @@
 /* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -42689,29 +42683,32 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactBootstrap = __webpack_require__(200);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Check = _react2.default.createClass({
-		displayName: "Check",
+		displayName: 'Check',
 
 		checkClasses: function checkClasses(check_status) {
 			return check_status ? "'checked'" : null;
 		},
 		render: function render() {
 			return _react2.default.createElement(
-				"p",
-				null,
-				_react2.default.createElement("input", { type: "checkbox", ref: this.props.id, className: "filled-in",
-					id: this.props.id, checked: this.checkClasses(this.props.check_status) }),
+				_reactBootstrap.FormGroup,
+				{ controlId: this.props.check_name },
+				_react2.default.createElement(_reactBootstrap.FormControl, { type: 'checkbox', ref: this.props.id, className: 'filled-in',
+					checked: this.checkClasses(this.props.check_status), readOnly: 'true' }),
 				_react2.default.createElement(
-					"label",
-					{ "for": this.props.id },
+					_reactBootstrap.ControlLabel,
+					null,
 					this.props.check_name
 				),
+				_react2.default.createElement('br', null),
 				_react2.default.createElement(
-					"time",
+					'time',
 					null,
-					"  ",
+					'  ',
 					this.props.formattedDate
 				)
 			);
@@ -42847,6 +42844,325 @@
 	});
 
 	exports.default = Patient;
+
+/***/ },
+/* 473 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _counterslist = __webpack_require__(474);
+
+	var _counterslist2 = _interopRequireDefault(_counterslist);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var CounterBox = _react2.default.createClass({
+		displayName: 'CounterBox',
+
+		loadCountersFromServer: function loadCountersFromServer() {
+			$.ajax({
+				url: this.props.url,
+				dataType: 'json',
+				cache: false,
+				success: function (data) {
+					this.setState({ data: data });
+				}.bind(this),
+				error: function (xhr, status, err) {
+					console.error(this.props.url, status, err.toString());
+				}.bind(this)
+			});
+		},
+		getInitialState: function getInitialState() {
+			return { data: [] };
+		},
+		componentDidMount: function componentDidMount() {
+			this.loadCountersFromServer();
+			setInterval(this.loadCountersFromServer, this.props.pollInterval);
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'container' },
+				_react2.default.createElement(_counterslist2.default, { data: this.state.data })
+			);
+		}
+	});
+	exports.default = CounterBox;
+
+/***/ },
+/* 474 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _counter = __webpack_require__(475);
+
+	var _counter2 = _interopRequireDefault(_counter);
+
+	var _reactBootstrap = __webpack_require__(200);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var CountersList = _react2.default.createClass({
+		displayName: 'CountersList',
+
+		render: function render() {
+			var counterNodes = this.props.data.map(function (counter) {
+				return _react2.default.createElement(_counter2.default, _extends({ key: counter.id }, counter));
+			});
+			return _react2.default.createElement(
+				'div',
+				{ className: 'card-panel' },
+				_react2.default.createElement(
+					'p',
+					null,
+					'Timers'
+				),
+				_react2.default.createElement(
+					_reactBootstrap.Grid,
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Row,
+						{ className: 'show-grid' },
+						counterNodes
+					)
+				)
+			);
+		}
+
+	});
+	exports.default = CountersList;
+
+/***/ },
+/* 475 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(200);
+
+	var _timer = __webpack_require__(476);
+
+	var _timer2 = _interopRequireDefault(_timer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var OPTIONS = { prefix: 'seconds elapsed!', delay: 100 };
+	var Counter = _react2.default.createClass({
+		displayName: 'Counter',
+
+
+		render: function render() {
+			return _react2.default.createElement(
+				_reactBootstrap.Col,
+				{ sm: 6, md: 4, className: 'card-panel' },
+				_react2.default.createElement(
+					'p',
+					null,
+					_react2.default.createElement(
+						'strong',
+						null,
+						this.props.counter_title
+					)
+				),
+				_react2.default.createElement(_timer2.default, _extends({ options: OPTIONS }, this.props))
+			);
+		}
+	});
+
+	exports.default = Counter;
+
+/***/ },
+/* 476 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SecondsTohhmmss = __webpack_require__(477);
+
+	var _SecondsTohhmmss2 = _interopRequireDefault(_SecondsTohhmmss);
+
+	var _reactBootstrap = __webpack_require__(200);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Timer module
+	 * A simple timer component.
+	**/
+
+	var Timer = _react2.default.createClass({
+	  displayName: 'Timer',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      clock: 0,
+	      time: ''
+	    };
+	  },
+	  /**
+	   * Pause the timer.
+	  **/
+	  pause: function pause() {
+	    if (this.interval) {
+	      clearInterval(this.interval);
+	      this.interval = null;
+	    }
+	  },
+	  /** 
+	   * Play the timer.
+	  **/
+	  play: function play() {
+	    if (!this.interval) {
+	      this.offset = Date.now();
+	      this.interval = setInterval(this.update, this.props.options.delay); // 100 is delay
+	    }
+	  },
+	  /** 
+	   * Reset the timer.
+	  **/
+	  reset: function reset() {
+	    var clockReset = 0;
+	    this.setState({ clock: clockReset });
+	    var time = (0, _SecondsTohhmmss2.default)(clockReset / 1000);
+	    this.setState({ time: time });
+	  },
+	  /** 
+	   * Increment the timer.
+	  **/
+	  update: function update() {
+	    var clock = this.state.clock;
+	    clock += this.calculateOffset();
+	    this.setState({ clock: clock });
+	    var time = (0, _SecondsTohhmmss2.default)(clock / 1000);
+	    this.setState({ time: time });
+	  },
+	  /** 
+	   * Calculate the offset time.
+	  **/
+	  calculateOffset: function calculateOffset() {
+	    var now = Date.now(),
+	        o = now - this.offset;
+	    this.offset = now;
+	    return o;
+	  },
+	  componentDidMount: function componentDidMount() {
+	    //this.play();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.pause();
+	  },
+	  render: function render() {
+
+	    var timerStyle = {
+	      margin: "auto",
+	      padding: "2em"
+	    };
+
+	    var buttonStyle = {
+	      background: "#fff",
+	      color: "#666",
+	      border: "1px solid #ddd",
+	      margin: "0.25em",
+	      padding: "0.75em",
+	      fontWeight: "200"
+	    };
+
+	    var secondsStyles = {
+	      fontSize: "200%",
+	      fontWeight: "200",
+	      lineHeight: "1.5",
+	      margin: "auto",
+	      color: "#666"
+	    };
+
+	    return _react2.default.createElement(
+	      'div',
+	      { style: timerStyle, className: 'react-timer' },
+	      _react2.default.createElement(
+	        'h3',
+	        { style: secondsStyles, className: 'seconds' },
+	        ' ',
+	        this.state.time,
+	        ' ',
+	        this.props.prefix
+	      ),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement(
+	        _reactBootstrap.Button,
+	        { onClick: this.reset, bsStyle: 'default', bsSize: 'sm' },
+	        'reset'
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Button,
+	        { onClick: this.play, bsStyle: 'default', bsSize: 'sm' },
+	        'start'
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Button,
+	        { onClick: this.pause, bsStyle: 'default', bsSize: 'sm' },
+	        'pause'
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Timer;
+
+/***/ },
+/* 477 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var SecondsTohhmmss = function SecondsTohhmmss(totalSeconds) {
+	  var hours = Math.floor(totalSeconds / 3600);
+	  var minutes = Math.floor((totalSeconds - hours * 3600) / 60);
+	  var seconds = totalSeconds - hours * 3600 - minutes * 60;
+
+	  // round seconds
+	  seconds = Math.round(seconds * 100) / 100;
+
+	  var result = hours < 10 ? "0" + hours : hours;
+	  result += ":" + (minutes < 10 ? "0" + minutes : minutes);
+	  result += ":" + (seconds < 10 ? "0" + seconds : seconds);
+	  return result;
+	};
+
+	module.exports = SecondsTohhmmss;
 
 /***/ }
 /******/ ]);

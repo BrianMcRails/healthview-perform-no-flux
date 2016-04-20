@@ -23,12 +23,12 @@ var Risk = React.createClass({
 
 	render: function(){
 		return (
-			<Col sm={6} md={4}>
+			<Col sm={6} md={4} className="card-panel">
             	<p><strong>{this.props.risk_score_title}</strong></p>
 
       			<RiskCalculator {...this.props}/>
 
-     			<time>Last updated: {this.props.formattedDate}</time>
+     			<time className="updated-time">Last updated: {this.props.formattedDate}</time>
     		</Col>
 		);
 	}

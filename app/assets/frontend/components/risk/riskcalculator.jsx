@@ -32,12 +32,10 @@ var RiskCalculator = React.createClass({
   },
 
   render() {
-    let popover = <Popover title="popover">very popover. such engagement</Popover>;
-    let tooltip = <Tooltip>wow.</Tooltip>;
-
+  
     return (
-      <div>
-      <OverlayTrigger trigger="hover" placement="right" 
+      <div className="calculator">
+      <OverlayTrigger placement="right" 
               overlay={<Popover id= {this.props.id} title={this.props.risk_score_title}>Risk is <strong>{this.props.risk_weight}.</strong>
                 {this.props.risk_comment}</Popover>}>
         <Button
@@ -70,7 +68,8 @@ var RiskCalculator = React.createClass({
             <Button onClick={this.close}>Close</Button>
           </Modal.Footer>
         </Modal>
-      </div>
+        </div>
+      
     );
   }
 });

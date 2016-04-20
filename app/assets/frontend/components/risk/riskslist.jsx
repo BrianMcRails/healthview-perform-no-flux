@@ -13,7 +13,7 @@ var RisksList = React.createClass({
 		return (
 			<div className="card-panel">
 				<p>Risk Scores</p>
-				<Grid fluid='true'>
+				<Grid>
 					<Row className="show-grid">
 						{riskNodes}
 					</Row>

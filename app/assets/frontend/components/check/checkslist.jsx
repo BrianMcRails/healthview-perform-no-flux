@@ -1,6 +1,6 @@
 import React from 'react';
 import Check from './check';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 var ChecksList = React.createClass({
 	render: function(){
@@ -13,13 +13,11 @@ var ChecksList = React.createClass({
 		return (
 			<div className="card-panel">
 				<p className="sectionHeader">Pre-procedure Checklist</p>
-				<form action='#'>
-				<Grid fluid='true'>
-					<Row className="show-grid">
+				<Form inline action='#'>
+					<div className="card-panel checklist">
 					{checkNodes}
-					</Row>
-				</Grid>
-				</form>
+					</div>
+				</Form>
 			</div>
 			);
 	}

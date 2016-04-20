@@ -18,6 +18,7 @@ class App extends React.Component {
 
  let documentReady = () => {
  	let reactNode = document.getElementById('react');
+
  	if (reactNode){
  		ReactDOM.render(
  			<Router history={history}>
@@ -30,3 +31,4 @@ class App extends React.Component {
  };
 
  $(documentReady);
+ 

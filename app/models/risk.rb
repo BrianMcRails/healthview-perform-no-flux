@@ -35,11 +35,11 @@ class Risk < ActiveRecord::Base
 
 	def risk_comment
 		if risk_score_title=='SCAI Acute Kidney Injury' && risk_score>=31
-			'Caution with contrast use.'
+			'  Caution with contrast use.'
 		elsif risk_score_title=='SCAI PCI Mortality' && risk_score>=10
-			'Consider alternatives to PCI due to high mortality chance.'
+			'  Consider alternatives to PCI due to high mortality chance.'
 		elsif risk_score_title=='SYNTAX Score' && risk_score>=22
-			'Consider CABG as an alternative due to high chance of revascularization in PCI.'
+			'  Consider CABG as an alternative due to high chance of revascularization in PCI.'
 			
 		end
 

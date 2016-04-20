@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :counters
   resources :pre_checks
   get 'patients' => 'patients#index'
 
